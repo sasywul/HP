@@ -14,9 +14,9 @@ data class UserEntity (
 
     @ColumnInfo(name = "last_nama")
     val namaBelakang: String,
-
     val username : String,
-    val email : String
+    val email : String,
+    val password : String
 
 
 )

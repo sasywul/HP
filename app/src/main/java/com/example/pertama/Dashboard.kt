@@ -6,29 +6,42 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+
 //import org.w3c.dom.Text
 
 class Dashboard : AppCompatActivity() {
+    private lateinit var userDao : UserDao
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_dashboard)
 
-        val nama_depan =intent.getStringExtra("Nama_Depan")
-        val nama_belakang = intent.getStringExtra("Nama_Belakang")
-        val username = intent.getStringExtra("USERNAME")
-        val email = intent.getStringExtra("EMAIL")
+        val db = AbsenDatabase.getDatabase(this)
+        userDao = db.userDao()
+
+        val id = intent.getIntExtra("ID",0)
+
 
         val tvNamaDepan = findViewById<TextView>(R.id.TvNamaDepan)
         val tvNamaBelakang = findViewById<TextView>(R.id.tvNamaBelakang)
         val tvUsername = findViewById<TextView>(R.id.username)
         val tvEmail = findViewById<TextView>(R.id.email)
 
-        tvNamaDepan.text = nama_depan
-        tvNamaBelakang.text = nama_belakang
-        tvUsername.text = username
-        tvEmail.text = email
+        lifecycleScope.launch(Dispatchers.IO) {
+        val user = userDao.getUserById(id)
+            withContext(Dispatchers.Main) {
 
+                tvNamaDepan.text = (user?.namaDepan)
+                tvNamaBelakang.text = (user?.namaBelakang)
+                tvUsername.text = (user?.username)
+                tvEmail.text = (user?.email)
+            }
+        }
 
 
 

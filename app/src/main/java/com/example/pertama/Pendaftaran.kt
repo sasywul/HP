@@ -65,13 +65,9 @@ class Pendaftaran : AppCompatActivity() {
         val password = etPassword.text.toString()
         val confirmPassword = etConfirmPassword.text.toString()
 
-        // Reset error sebelumnya
-        etUsername.error = null
-        etEmail.error = null
-        etNamaDepan.error = null
-        etNamaBelakang.error = null
-        etPassword.error = null
-        etConfirmPassword.error = null
+
+
+
 
         // Validasi sederhana
         when {
@@ -115,7 +111,8 @@ class Pendaftaran : AppCompatActivity() {
                     namaDepan = namaDepan,
                     namaBelakang = namaBelakang,
                     username = username,
-                    email = email
+                    email = email,
+                    password = password
                 )
                 val db = AbsenDatabase.getDatabase(this)
 
@@ -125,14 +122,15 @@ class Pendaftaran : AppCompatActivity() {
 
                 val namaUser = "$namaDepan $namaBelakang"
                 Toast.makeText(this, "User $namaUser berhasil dibuat.", Toast.LENGTH_LONG).show()
-                val pindah = Intent(this, Dashboard::class.java)
 
-                pindah.putExtra("Nama_Depan", namaDepan)
-                pindah.putExtra("Nama_Belakang", namaBelakang)
-                pindah.putExtra("USERNAME", username)
-                pindah.putExtra("EMAIL", email)
+                etUsername.setText("")
+                etEmail.setText("")
+                etNamaDepan.setText("")
+                etNamaBelakang.setText("")
+                etPassword.setText("")
+                etConfirmPassword.setText("")
 
-                startActivity(pindah)
+
             }
         }
     }

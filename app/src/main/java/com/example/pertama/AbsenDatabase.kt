@@ -7,6 +7,7 @@ import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import androidx.room.migration.Migration
 
+
 @Database(entities = [UserEntity::class], version = 2, exportSchema = false)
 abstract class AbsenDatabase : RoomDatabase() {
     abstract fun userDao(): UserDao
